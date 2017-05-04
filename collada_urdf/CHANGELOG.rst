@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.10 (2017-05-04)
+--------------------
 * Moved collada_parser and collada_urdf to new repository
 
 1.12.9 (2017-04-26)

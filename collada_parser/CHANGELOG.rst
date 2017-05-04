@@ -2,9 +2,11 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.11.13 (2017-05-02)
+1.11.13 (2017-03-27)
 --------------------
-* Moved collada_parser and collada_urdf to a new repository
+* Use urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
+* add Chris and Shane as maintainers (`#185 <https://github.com/ros/robot_model/issues/185>`_)
+* Contributors: Jochen Sprickerhof, William Woodall
 
 1.11.12 (2017-01-04)
 --------------------

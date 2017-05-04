@@ -2,8 +2,8 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.14 (2017-05-04)
+--------------------
 * Moved to new repository
 
 1.11.13 (2017-03-27)

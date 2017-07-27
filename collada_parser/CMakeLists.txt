@@ -18,7 +18,7 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${urdfdom_headers_INCLUDE_DIR
 
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/)
 find_package(PkgConfig)
-find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
+find_package(COLLADA_DOM 2.4 REQUIRED COMPONENTS 1.5)
 if(COLLADA_DOM_FOUND)
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})

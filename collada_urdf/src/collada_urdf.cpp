@@ -531,6 +531,7 @@ public:
 };
 
 /// \brief Implements writing urdf::Model objects to a COLLADA DOM.
+// Portions of this code are taken verbatim from OpenRAVE (https://github.com/rdiankov/openrave, commits 87410293, ca3473f7, d844de2a) and relicensed as BSD by the original author (rdiankov)
 class ColladaWriter : public daeErrorHandler
 {
 private:

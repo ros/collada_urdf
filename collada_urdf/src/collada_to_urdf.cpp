@@ -28,8 +28,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 
-#include <tf/LinearMath/Transform.h>
-#include <tf/LinearMath/Quaternion.h>
+#include <Eigen/Geometry>
 
 #undef GAZEBO_1_3
 
@@ -340,19 +339,27 @@ void addChildLinkNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
       os << "      <mass value=\"" << link->inertial->mass << "\" />" << endl;
       os << "      <origin ";
 
-      tf::Quaternion qt (link->inertial->origin.rotation.x,
-                         link->inertial->origin.rotation.y,
-                         link->inertial->origin.rotation.z,
-                         link->inertial->origin.rotation.w);
-      tf::Matrix3x3 mat (qt);
-      tf::Matrix3x3 tmat (mat.transpose());
-      tf::Matrix3x3 imat (link->inertial->ixx, link->inertial->ixy, link->inertial->ixz,
-                          link->inertial->ixy, link->inertial->iyy, link->inertial->iyz,
-                          link->inertial->ixz, link->inertial->iyz, link->inertial->izz);
+      Eigen::Quaterniond qt(link->inertial->origin.rotation.w,
+                            link->inertial->origin.rotation.x,
+                            link->inertial->origin.rotation.y,
+                            link->inertial->origin.rotation.z);
+      Eigen::Matrix3d mat(qt);
+      Eigen::Matrix3d tmat(mat.transpose());
+      Eigen::Matrix3d imat;
+      imat(0, 0) = link->inertial->ixx;
+      imat(0, 1) = link->inertial->ixy;
+      imat(0, 2) = link->inertial->ixz;
+      imat(1, 0) = link->inertial->ixy;
+      imat(1, 1) = link->inertial->iyy;
+      imat(1, 2) = link->inertial->iyz;
+      imat(2, 0) = link->inertial->ixz;
+      imat(2, 1) = link->inertial->iyz;
+      imat(2, 2) = link->inertial->izz;
+
 #define DEBUG_MAT(mat)                                                  \
-      cout << "#2f((" << mat[0][0] << " " << mat[0][1] << " " << mat[0][2] << ")"; \
-      cout << "(" << mat[1][0] << " " << mat[1][1] << " " << mat[1][2] << ")"; \
-      cout << "(" << mat[2][0] << " " << mat[2][1] << " " << mat[2][2] << "))" << endl;
+      cout << "#2f((" << mat(0, 0) << " " << mat(0, 1) << " " << mat(0, 2) << ")"; \
+      cout << "(" << mat(1, 0) << " " << mat(1, 1) << " " << mat(1, 2) << ")"; \
+      cout << "(" << mat(2, 0) << " " << mat(2, 1) << " " << mat(2, 2) << "))" << endl;
 
 #if DEBUG
       DEBUG_MAT(mat);
@@ -372,12 +379,12 @@ void addChildLinkNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
       PRINT_ORIGIN_XML(os, t_pose);
       os << "/>" << endl;
 
-      os << "      <inertia ixx=\"" << imat[0][0] << "\" ";
-      os << "ixy=\"" << imat[0][1] << "\" ";
-      os << "ixz=\"" << imat[0][2] << "\" ";
-      os << "iyy=\"" << imat[1][1] << "\" ";
-      os << "iyz=\"" << imat[1][2] << "\" ";
-      os << "izz=\"" << imat[2][2] << "\"/>" << endl;
+      os << "      <inertia ixx=\"" << imat(0, 0) << "\" ";
+      os << "ixy=\"" << imat(0, 1) << "\" ";
+      os << "ixz=\"" << imat(0, 2) << "\" ";
+      os << "iyy=\"" << imat(1, 1) << "\" ";
+      os << "iyz=\"" << imat(1, 2) << "\" ";
+      os << "izz=\"" << imat(2, 2) << "\"/>" << endl;
       os << "    </inertial>" << endl;
     }
   }

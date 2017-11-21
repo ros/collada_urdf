@@ -31,8 +31,8 @@
   <build_depend>roscpp</build_depend>
   <build_depend>urdf</build_depend>
   <build_depend>geometric_shapes</build_depend>
-  <build_depend>tf</build_depend>
   <build_depend>cmake_modules</build_depend>
+  <build_depend>eigen</build_depend>
 
   <run_depend>angles</run_depend>
   <run_depend>assimp</run_depend>
@@ -43,7 +43,6 @@
   <run_depend>resource_retriever</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>urdf</run_depend>
-  <run_depend>tf</run_depend>
   <run_depend>geometric_shapes</run_depend>
 
 </package>

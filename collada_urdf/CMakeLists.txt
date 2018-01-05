@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(collada_urdf)
 
-find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf geometric_shapes tf cmake_modules)
+find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf geometric_shapes cmake_modules)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS angles collada_parser resource_retriever urdf geometric_shapes tf)
+  DEPENDS angles collada_parser resource_retriever urdf geometric_shapes)
 
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-std=c++11 HAS_STD_CPP11_FLAG)
@@ -48,13 +48,15 @@ endif()
 find_package(Boost REQUIRED COMPONENTS system filesystem program_options)
 include_directories(${Boost_INCLUDE_DIR})
 
+find_package(Eigen3 REQUIRED)
+
 find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
 if( COLLADA_DOM_FOUND )
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})
 endif()
 
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)

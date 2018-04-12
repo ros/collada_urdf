@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(collada_urdf)
 
-find_package(catkin REQUIRED COMPONENTS angles cmake_modules collada_parser geometric_shapes resource_retriever urdf)
+find_package(catkin REQUIRED COMPONENTS angles cmake_modules collada_parser geometric_shapes resource_retriever rosconsole urdf)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS angles collada_parser geometric_shapes resource_retriever urdf)
+  DEPENDS angles collada_parser geometric_shapes resource_retriever rosconsole urdf)
 
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-std=c++11 HAS_STD_CPP11_FLAG)

@@ -56,11 +56,13 @@
 #include <dom/domTriangles.h>
 #include <dae/daeStandardURIResolver.h>
 
+#include <boost/array.hpp>
 #include <boost/assert.hpp>
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <ros/ros.h>
+#include <ros/console.h>
 #include <collada_parser/collada_parser.h>
 #include <urdf_model/model.h>
 

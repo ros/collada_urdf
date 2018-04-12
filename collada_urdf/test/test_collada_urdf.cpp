@@ -31,10 +31,6 @@
 
 #include <gtest/gtest.h>
 
-#include <fstream>
-#include <sstream>
-#include <string>
-
 TEST(collada_urdf, collada_from_urdf_file_works)
 {
     urdf::Model robot_model;
@@ -51,7 +47,8 @@ TEST(collada_urdf, collada_output_dir_does_not_exist)
     ASSERT_FALSE(collada_urdf::WriteUrdfModelToColladaFile(robot_model, "a/very/long/directory/path/that/should/not/exist/pr2.dae"));
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

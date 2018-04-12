@@ -33,14 +33,15 @@
 *********************************************************************/
 
 /* Author: Rosen Diankov, used OpenRAVE files for reference  */
-#include <vector>
+#include <cmath>
+#include <cstdlib>
 #include <list>
 #include <map>
-#include <stdint.h>
-#include <cstdlib>
-#include <cmath>
 #include <string>
 #include <sstream>
+#include <vector>
+
+#include <stdint.h>
 
 /* disable deprecated auto_ptr warnings */
 #pragma GCC diagnostic push

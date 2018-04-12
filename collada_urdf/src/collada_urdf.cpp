@@ -36,9 +36,11 @@
 /* Authors: Rosen Diankov, Tim Field */
 
 #include "collada_urdf/collada_urdf.h"
-#include <map>
-#include <vector>
+
 #include <list>
+#include <map>
+#include <string>
+#include <vector>
 
 #ifndef _WIN32
 #pragma GCC diagnostic push

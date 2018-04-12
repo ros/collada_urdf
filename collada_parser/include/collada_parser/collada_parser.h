@@ -38,16 +38,13 @@
 #define COLLADA_PARSER_COLLADA_PARSER_H
 
 #include <string>
-#include <map>
-#include <boost/function.hpp>
 
 #include <urdf/urdfdom_compatibility.h>
-
 
 namespace urdf {
 
 /// \brief Load Model from string
-urdf::ModelInterfaceSharedPtr parseCollada(const std::string &xml_string );
+urdf::ModelInterfaceSharedPtr parseCollada(const std::string& xml_string);
 
 }
 

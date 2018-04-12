@@ -1,4 +1,10 @@
 /* Author: Yohei Kakiuchi */
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
 #include <ros/ros.h>
 #include <urdf/model.h>
 
@@ -20,9 +26,6 @@
 #include <aiScene.h>
 #include <aiPostProcess.h>
 #endif
-
-#include <iostream>
-#include <fstream>
 
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>

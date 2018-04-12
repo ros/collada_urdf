@@ -70,10 +70,6 @@
 #include <fstream>
 #include <fcntl.h>
 #endif
-#ifndef HAVE_MKSTEMPS
-#include <fstream>
-#include <fcntl.h>
-#endif
 
 #define typeof __typeof__
 #define FOREACH(it, v) for(typeof((v).begin())it = (v).begin(); it != (v).end(); (it)++)

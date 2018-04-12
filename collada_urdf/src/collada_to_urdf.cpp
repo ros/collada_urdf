@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <ros/ros.h>
+#include <ros/console.h>
 #include <urdf/model.h>
 
 #include <collada_parser/collada_parser.h>

@@ -3,10 +3,7 @@ project(collada_urdf)
 
 find_package(catkin REQUIRED COMPONENTS angles cmake_modules collada_parser geometric_shapes resource_retriever rosconsole urdf)
 
-catkin_package(
-  LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include
-  DEPENDS angles collada_parser geometric_shapes resource_retriever rosconsole urdf)
+find_package(urdfdom_headers REQUIRED)
 
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-std=c++11 HAS_STD_CPP11_FLAG)
@@ -55,6 +52,13 @@ if( COLLADA_DOM_FOUND )
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})
 endif()
+
+catkin_package(
+  LIBRARIES ${PROJECT_NAME}
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS collada_parser geometric_shapes resource_retriever rosconsole urdf
+  DEPENDS ASSIMP COLLADA_DOM urdfdom_headers
+)
 
 include_directories(${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})

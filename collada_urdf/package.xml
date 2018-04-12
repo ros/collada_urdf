@@ -23,6 +23,8 @@
 
   <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
 
+  <build_export_depend>liburdfdom-headers-dev</build_export_depend>
+
   <build_depend>angles</build_depend>
   <build_depend>assimp-dev</build_depend>
   <build_depend>cmake_modules</build_depend>
@@ -36,13 +38,11 @@
   <build_depend>rosconsole</build_depend>
   <build_depend>urdf</build_depend>
 
-  <exec_depend>angles</exec_depend>
   <exec_depend>assimp</exec_depend>
   <exec_depend>collada-dom</exec_depend>
   <exec_depend>collada_parser</exec_depend>
   <exec_depend>geometric_shapes</exec_depend>
   <exec_depend>liburdfdom-dev</exec_depend>
-  <exec_depend>liburdfdom-headers-dev</exec_depend>
   <exec_depend>resource_retriever</exec_depend>
   <exec_depend>rosconsole</exec_depend>
   <exec_depend>urdf</exec_depend>

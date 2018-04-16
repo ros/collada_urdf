@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 
     urdf::Model robot_model;
     if (!robot_model.initFile(input_filename)) {
-        ROS_ERROR("failed to open urdf file %s", input_filename.c_str());
+        std::cerr << "failed to open urdf file " << input_filename << std::endl;
         return -2;
     }
 

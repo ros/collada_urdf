@@ -2,6 +2,13 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Collada cleanup dependencies (`#26 <https://github.com/ros/collada_urdf/issues/26>`_)
+* update links now that this is in its own repo
+* Make CMakeLists.txt depend on collada-dom version 2.4. (`#11 <https://github.com/ros/collada_urdf/issues/11>`_)
+* Contributors: Chris Lalancette, Mikael Arguedas
+
 1.12.10 (2017-05-04)
 --------------------
 * Moved collada_parser and collada_urdf to new repository

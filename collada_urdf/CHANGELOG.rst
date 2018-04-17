@@ -2,6 +2,15 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Collada cleanup dependencies (`#26 <https://github.com/ros/collada_urdf/issues/26>`_)
+* update links now that this is in its own repo
+* Switch to using Eigen for Quaternion and Matrix. (`#21 <https://github.com/ros/collada_urdf/issues/21>`_)
+* add relicensing comment (`#19 <https://github.com/ros/collada_urdf/issues/19>`_)
+* remove unused tinyxml from cmakelists (`#15 <https://github.com/ros/collada_urdf/issues/15>`_)
+* Contributors: Chris Lalancette, Mikael Arguedas, Rosen Diankov
+
 1.12.10 (2017-05-04)
 --------------------
 * Moved collada_parser and collada_urdf to new repository

@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.11 (2018-04-17)
+--------------------
 * Collada cleanup dependencies (`#26 <https://github.com/ros/collada_urdf/issues/26>`_)
 * update links now that this is in its own repo
 * Switch to using Eigen for Quaternion and Matrix. (`#21 <https://github.com/ros/collada_urdf/issues/21>`_)

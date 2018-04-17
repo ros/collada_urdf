@@ -37,6 +37,8 @@
 #ifndef COLLADA_PARSER_COLLADA_PARSER_PLUGIN_H
 #define COLLADA_PARSER_COLLADA_PARSER_PLUGIN_H
 
+#include <string>
+
 #include <urdf_parser_plugin/parser.h>
 
 namespace urdf
@@ -46,7 +48,7 @@ class ColladaURDFParser : public URDFParser
 {
 public:
 
-  virtual urdf::ModelInterfaceSharedPtr parse(const std::string &xml_string);
+  virtual urdf::ModelInterfaceSharedPtr parse(const std::string& xml_string);
 };
 
 }

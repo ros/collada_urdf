@@ -33,14 +33,14 @@
 *********************************************************************/
 
 /* Author: Rosen Diankov, used OpenRAVE files for reference  */
-#include <vector>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
 #include <list>
 #include <map>
-#include <stdint.h>
-#include <cstdlib>
-#include <cmath>
 #include <string>
 #include <sstream>
+#include <vector>
 
 /* disable deprecated auto_ptr warnings */
 #pragma GCC diagnostic push
@@ -55,18 +55,16 @@
 #include <dom/domTriangles.h>
 #include <dae/daeStandardURIResolver.h>
 
+#include <boost/array.hpp>
 #include <boost/assert.hpp>
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <ros/ros.h>
+#include <ros/console.h>
 #include <collada_parser/collada_parser.h>
 #include <urdf_model/model.h>
 
-#ifndef HAVE_MKSTEMPS
-#include <fstream>
-#include <fcntl.h>
-#endif
 #ifndef HAVE_MKSTEMPS
 #include <fstream>
 #include <fcntl.h>

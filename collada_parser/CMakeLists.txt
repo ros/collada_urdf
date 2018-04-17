@@ -3,20 +3,12 @@ project(collada_parser)
 
 find_package(Boost REQUIRED system)
 
-find_package(catkin REQUIRED COMPONENTS urdf_parser_plugin roscpp class_loader urdf)
+find_package(catkin REQUIRED COMPONENTS class_loader rosconsole urdf urdf_parser_plugin)
 find_package(urdfdom_headers REQUIRED)
 
 add_compile_options(-std=c++11)
 
-catkin_package( 
-  LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp urdf_parser_plugin
-  DEPENDS urdfdom_headers
-)
-
-include_directories(${Boost_INCLUDE_DIR})
-include_directories(include ${catkin_INCLUDE_DIRS} ${urdfdom_headers_INCLUDE_DIRS})
+include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${urdfdom_headers_INCLUDE_DIRS})
 
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/)
 find_package(PkgConfig)
@@ -25,6 +17,13 @@ if(COLLADA_DOM_FOUND)
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})
 endif()
+
+catkin_package(
+  LIBRARIES ${PROJECT_NAME}
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS class_loader rosconsole urdf urdf_parser_plugin
+  DEPENDS COLLADA_DOM
+)
 
 # necessary for collada reader to create the temporary dae files due
 # to limitations in the URDF geometry
@@ -49,7 +48,7 @@ target_link_libraries(${PROJECT_NAME}_plugin
 set_target_properties(${PROJECT_NAME}
   PROPERTIES COMPILER_FLAGS "${COLLADA_DOM_CFLAGS_OTHER}"
 )
-if(APPLE) 
+if(APPLE)
   set_target_properties(${PROJECT_NAME}
     PROPERTIES LINK_FLAGS
     "${COLLADA_DOM_LDFLAGS_OTHER} -undefined dynamic_lookup"

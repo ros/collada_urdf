@@ -1,5 +1,11 @@
 /* Author: Yohei Kakiuchi */
-#include <ros/ros.h>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+#include <ros/console.h>
 #include <urdf/model.h>
 
 #include <collada_parser/collada_parser.h>
@@ -20,9 +26,6 @@
 #include <aiScene.h>
 #include <aiPostProcess.h>
 #endif
-
-#include <iostream>
-#include <fstream>
 
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>

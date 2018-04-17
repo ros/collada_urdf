@@ -34,14 +34,7 @@
 
 /* Author: Tim Field */
 
-#ifndef _WIN32
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "collada_urdf/collada_urdf.h"
-#pragma GCC diagnostic pop
-#endif
-
-#include <ros/ros.h>
 
 int main(int argc, char** argv)
 {
@@ -50,14 +43,12 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    ros::init(argc, argv, "urdf_to_collada");
-
     std::string input_filename(argv[1]);
     std::string output_filename(argv[2]);
 
     urdf::Model robot_model;
-    if( !robot_model.initFile(input_filename) ) {
-        ROS_ERROR("failed to open urdf file %s", input_filename.c_str());
+    if (!robot_model.initFile(input_filename)) {
+        std::cerr << "failed to open urdf file " << input_filename << std::endl;
         return -2;
     }
 

@@ -1,4 +1,4 @@
-<package>
+<package format="2">
   <name>collada_parser</name>
   <version>1.12.10</version>
   <description>
@@ -24,18 +24,19 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_export_depend>urdf</build_export_depend>
+  <build_export_depend>urdf_parser_plugin</build_export_depend>
+
+  <build_depend>class_loader</build_depend>
   <build_depend>collada-dom</build_depend>
   <build_depend>liburdfdom-headers-dev</build_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>urdf_parser_plugin</build_depend>
-  <build_depend>class_loader</build_depend>
+  <build_depend>rosconsole</build_depend>
   <build_depend>urdf</build_depend>
+  <build_depend>urdf_parser_plugin</build_depend>
 
-  <run_depend>collada-dom</run_depend>
-  <run_depend>liburdfdom-headers-dev</run_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>urdf_parser_plugin</run_depend>
-  <run_depend>class_loader</run_depend>
+  <exec_depend>class_loader</exec_depend>
+  <exec_depend>collada-dom</exec_depend>
+  <exec_depend>rosconsole</exec_depend>
 
   <export>
     <urdf_parser_plugin plugin="${prefix}/collada_parser_plugin_description.xml"/>

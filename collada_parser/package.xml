@@ -37,6 +37,7 @@
   <exec_depend>class_loader</exec_depend>
   <exec_depend>collada-dom</exec_depend>
   <exec_depend>rosconsole</exec_depend>
+  <exec_depend>urdf_parser_plugin</exec_depend>
 
   <export>
     <urdf_parser_plugin plugin="${prefix}/collada_parser_plugin_description.xml"/>

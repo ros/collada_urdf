@@ -2,6 +2,11 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add exec_depend to package.xml of collada_parser for loading by pluginlib (`#27 <https://github.com/ros/collada_urdf/issues/27>`_)
+* Contributors: Yohei Kakiuchi
+
 1.12.11 (2018-04-17)
 --------------------
 * Collada cleanup dependencies (`#26 <https://github.com/ros/collada_urdf/issues/26>`_)

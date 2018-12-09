@@ -1176,13 +1176,8 @@ protected:
                         string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
                         igeom++;
                         domGeometryRef pdomgeom;
-                        if ( it != plink->visual_array.begin() ) {
-                            urdf::Pose org_trans =  _poseMult(geometry_origin_inv, (*it)->origin);
-                            pdomgeom = _WriteGeometry((*it)->geometry, geomid, &org_trans);
-                        }
-                        else {
-                            pdomgeom = _WriteGeometry((*it)->geometry, geomid);
-                        }
+                        urdf::Pose org_trans =  _poseMult(geometry_origin_inv, (*it)->origin);
+                        pdomgeom = _WriteGeometry((*it)->geometry, geomid, &org_trans);
                         domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
                         pinstgeom->setUrl((string("#") + geomid).c_str());
                         // material
@@ -1293,7 +1288,7 @@ protected:
         case urdf::Geometry::SPHERE: {
             shapes::Sphere sphere(static_cast<urdf::Sphere*>(geometry.get())->radius);
             boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(sphere));
-            _loadVertices(mesh.get(), cgeometry);
+            _loadVertices(mesh.get(), cgeometry, org_trans);
             break;
         }
         case urdf::Geometry::BOX: {
@@ -1301,14 +1296,14 @@ protected:
                             static_cast<urdf::Box*>(geometry.get())->dim.y,
                             static_cast<urdf::Box*>(geometry.get())->dim.z);
             boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(box));
-            _loadVertices(mesh.get(), cgeometry);
+            _loadVertices(mesh.get(), cgeometry, org_trans);
             break;
         }
         case urdf::Geometry::CYLINDER: {
             shapes::Cylinder cyl(static_cast<urdf::Cylinder*>(geometry.get())->radius,
                                  static_cast<urdf::Cylinder*>(geometry.get())->length);
             boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(cyl));
-            _loadVertices(mesh.get(), cgeometry);
+            _loadVertices(mesh.get(), cgeometry, org_trans);
             break;
         }
         default: {
@@ -1437,7 +1432,7 @@ protected:
         return pmout;
     }
 
-    void _loadVertices(const shapes::Mesh *mesh, domGeometryRef pdomgeom) {
+    void _loadVertices(const shapes::Mesh *mesh, domGeometryRef pdomgeom, urdf::Pose *org_trans) {
 
         // convert the mesh into an STL binary (in memory)
         std::vector<char> buffer;
@@ -1486,7 +1481,7 @@ protected:
             pvertinput->setSemantic("POSITION");
             pvertinput->setSource(domUrifragment(*pvertsource, std::string("#")+std::string(pvertsource->getID())));
         }
-        _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(), urdf::Vector3(1,1,1));
+        _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(), urdf::Vector3(1,1,1), org_trans);
         pacc->setCount(parray->getCount());
     }
 

@@ -1200,7 +1200,7 @@ protected:
                 // just 1 visual
                 int igeom = 0;
                 string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
-                domGeometryRef pdomgeom = _WriteGeometry(geometry, geomid);
+                domGeometryRef pdomgeom = _WriteGeometry(geometry, geomid, &geometry_origin_inv);
                 domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
                 pinstgeom->setUrl((string("#")+geomid).c_str());
 

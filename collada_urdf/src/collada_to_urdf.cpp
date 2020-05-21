@@ -462,7 +462,7 @@ void addChildJointNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
       } else {
         os << "    <dynamics ";
         os << "damping=\"0.2\"";
-        os << " friction=\"0\"";
+        os << " friction=\"1.0\"";
         os << " />" << endl;
       }
 #ifdef GAZEBO_1_3
@@ -480,17 +480,21 @@ void addChildJointNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
     os << "  </joint>" << endl;
 
     if ( add_gazebo_description ) {
-      os << "  <transmission type=\"pr2_mechanism_model/SimpleTransmission\" name=\"";
-      os << (*child)->parent_joint->name << "_trans\" >" << endl;
-      os << "    <actuator name=\"" << (*child)->parent_joint->name << "_motor\" />" << endl;
-      os << "    <joint name=\"" << (*child)->parent_joint->name << "\" />" << endl;
-      os << "    <mechanicalReduction>1</mechanicalReduction>" << endl;
-      //os << "    <motorTorqueConstant>1</motorTorqueConstant>" << endl;
-      //os << "    <pulsesPerRevolution>90000</pulsesPerRevolution>" << endl;
+      os << "  <transmission name=\"" << (*child)->parent_joint->name << "_trans\">" << endl;
+      os << "    <type>transmission_interface/SimpleTransmission</type>" << endl;
+      os << "    <actuator name=\"" << (*child)->parent_joint->name << "_motor\">" << endl;
+      os << "      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>" << endl;
+      os << "      <mechanicalReduction>1</mechanicalReduction>" << endl;
+      os << "    </actuator>" << endl;
+      os << "    <joint name=\"" << (*child)->parent_joint->name << "\">" << endl;
+      os << "      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>" << endl;
+      os << "    </joint>" << endl;
       os << "  </transmission>" << endl;
 #ifdef GAZEBO_1_3
       os << "  <gazebo reference=\"" << (*child)->parent_joint->name << "\">" << endl;
-      os << "    <cfmDamping>0.4</cfmDamping>" << endl;
+      os << "    <implicitSpringDamper>1</implicitSpringDamper>" << endl;
+      os << "    <springStiffness>100.0</springStiffness>" << endl;
+      os << "    <springReference>0.0</springReference>" << endl;
       os << "  </gazebo>" << endl;
 #endif
     }

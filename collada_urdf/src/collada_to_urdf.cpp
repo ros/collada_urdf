@@ -43,6 +43,7 @@ using namespace std;
 bool use_simple_visual = false;
 bool use_simple_collision = false;
 bool add_gazebo_description = false;
+bool use_transmission_interface = false;
 bool use_assimp_export = false;
 bool use_same_collision_as_visual = true;
 bool rotate_inertia_frame = true;
@@ -480,14 +481,27 @@ void addChildJointNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
     os << "  </joint>" << endl;
 
     if ( add_gazebo_description ) {
-      os << "  <transmission type=\"pr2_mechanism_model/SimpleTransmission\" name=\"";
-      os << (*child)->parent_joint->name << "_trans\" >" << endl;
-      os << "    <actuator name=\"" << (*child)->parent_joint->name << "_motor\" />" << endl;
-      os << "    <joint name=\"" << (*child)->parent_joint->name << "\" />" << endl;
-      os << "    <mechanicalReduction>1</mechanicalReduction>" << endl;
-      //os << "    <motorTorqueConstant>1</motorTorqueConstant>" << endl;
-      //os << "    <pulsesPerRevolution>90000</pulsesPerRevolution>" << endl;
-      os << "  </transmission>" << endl;
+      if ( !use_transmission_interface ) {
+        os << "  <transmission type=\"pr2_mechanism_model/SimpleTransmission\" name=\"";
+        os << (*child)->parent_joint->name << "_trans\" >" << endl;
+        os << "    <actuator name=\"" << (*child)->parent_joint->name << "_motor\" />" << endl;
+        os << "    <joint name=\"" << (*child)->parent_joint->name << "\" />" << endl;
+        os << "    <mechanicalReduction>1</mechanicalReduction>" << endl;
+        //os << "    <motorTorqueConstant>1</motorTorqueConstant>" << endl;
+        //os << "    <pulsesPerRevolution>90000</pulsesPerRevolution>" << endl;
+        os << "  </transmission>" << endl;
+      } else {
+        os << "  <transmission name=\"" << (*child)->parent_joint->name << "_trans\">" << endl;
+        os << "    <type>transmission_interface/SimpleTransmission</type>" << endl;
+        os << "    <joint name=\"" << (*child)->parent_joint->name << "\">" << endl;
+        os << "      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>" << endl;
+        os << "    </joint>" << endl;
+        os << "    <actuator name=\"" << (*child)->parent_joint->name << "_motor\">" << endl;
+        os << "      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>" << endl;
+        os << "      <mechanicalReduction>1</mechanicalReduction>" << endl;
+        os << "    </actuator>" << endl;
+        os << "  </transmission>" << endl;
+      }
 #ifdef GAZEBO_1_3
       os << "  <gazebo reference=\"" << (*child)->parent_joint->name << "\">" << endl;
       os << "    <cfmDamping>0.4</cfmDamping>" << endl;
@@ -528,6 +542,7 @@ int main(int argc, char** argv)
     ("simple_collision,C", "use bounding box for collision")
     ("export_collision_mesh", "export collision mesh as STL")
     ("add_gazebo_description,G", "add description for using on gazebo")
+    ("use_transmission_interface,T", "use transmission_interface as transmission")
     ("use_assimp_export,A", "use assimp library for exporting mesh")
     ("use_collision,U", "use collision geometry (default collision is the same as visual)")
     ("original_inertia_rotation,R", "does not rotate inertia frame")
@@ -567,6 +582,10 @@ int main(int argc, char** argv)
   if (vm.count("add_gazebo_description")) {
     add_gazebo_description = true;
     cerr << ";; Adding gazebo description" << endl;
+  }
+  if (vm.count("use_transmission_interface")) {
+    use_transmission_interface = true;
+    cerr << ";; Using transmission_interface as transmission" << endl;
   }
   if (vm.count("use_assimp_export")) {
 #if defined(ASSIMP_EXPORT_API)

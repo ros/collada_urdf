@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.13 (2020-07-14)
+--------------------
 * Update to newer CMake to get rid of CMP0048 warning (`#38 <https://github.com/ros/collada_urdf/issues/38>`_)
 * Enable to output transmission_interface instead of pr2_mechanism_model (`#35 <https://github.com/ros/collada_urdf/issues/35>`_)
 * Contributors: Chris Lalancette, Shun Hasegawa

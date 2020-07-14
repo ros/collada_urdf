@@ -2,6 +2,11 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update to newer CMake to get rid of CMP0048 warning (`#38 <https://github.com/ros/collada_urdf/issues/38>`_)
+* Contributors: Chris Lalancette
+
 1.12.12 (2018-05-08)
 --------------------
 * add exec_depend to package.xml of collada_parser for loading by pluginlib (`#27 <https://github.com/ros/collada_urdf/issues/27>`_)

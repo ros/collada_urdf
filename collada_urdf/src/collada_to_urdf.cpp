@@ -5,27 +5,19 @@
 #include <string>
 #include <vector>
 
-#include <ros/console.h>
+// #include <ros/console.h>
 #include <urdf/model.h>
 
 #include <collada_parser/collada_parser.h>
 #include <urdf_parser/urdf_parser.h>
 
-#if defined(ASSIMP_UNIFIED_HEADER_NAMES)
 #include <assimp/IOSystem.hpp>
 #include <assimp/IOStream.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#else
-#include <assimp.hpp>
-#if defined(ASSIMP_EXPORT_API)
-#include <assimp/export.hpp>
-#endif
-#include <aiScene.h>
-#include <aiPostProcess.h>
-#endif
+// #include <assimp/export.hpp>
 
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
@@ -642,12 +634,14 @@ int main(int argc, char** argv)
   urdf::ModelInterfaceSharedPtr robot;
   if( xml_string.find("<COLLADA") != std::string::npos )
   {
-    ROS_DEBUG("Parsing robot collada xml string");
+      // TODO(sloretz)
+    // ROS_DEBUG("Parsing robot collada xml string");
     robot = parseCollada(xml_string);
   }
   else
   {
-    ROS_DEBUG("Parsing robot urdf xml string");
+      // TODO(sloretz)
+    // ROS_DEBUG("Parsing robot urdf xml string");
     robot = parseURDF(xml_string);
   }
   if (!robot){

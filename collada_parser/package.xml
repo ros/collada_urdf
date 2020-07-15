@@ -29,19 +29,20 @@
 
   <build_depend>class_loader</build_depend>
   <build_depend>collada-dom</build_depend>
+  <build_depend>libboost-system-dev</build_depend>
   <build_depend>liburdfdom-headers-dev</build_depend>
-  <build_depend>rosconsole</build_depend>
+  <!-- <build_depend>rosconsole</build_depend> -->
   <build_depend>urdf</build_depend>
   <build_depend>urdf_parser_plugin</build_depend>
 
   <exec_depend>class_loader</exec_depend>
   <exec_depend>collada-dom</exec_depend>
-  <exec_depend>rosconsole</exec_depend>
+  <build_depend>libboost-system-dev</build_depend>
+  <!-- <exec_depend>rosconsole</exec_depend> -->
   <exec_depend>urdf_parser_plugin</exec_depend>
 
   <export>
-    <urdf_parser_plugin plugin="${prefix}/collada_parser_plugin_description.xml"/>
+    <build_type>ament_cmake</build_type>
   </export>
-
 </package>
 

@@ -61,7 +61,7 @@
 #include <urdf/model.h>
 #include <urdf_model/pose.h>
 #include <angles/angles.h>
-#include <ros/assert.h>
+// #include <ros/assert.h>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/posix_time/posix_time_io.hpp>
@@ -70,7 +70,6 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#if defined(ASSIMP_UNIFIED_HEADER_NAMES)
 #include <assimp/scene.h>
 #include <assimp/LogStream.hpp>
 #include <assimp/DefaultLogger.hpp>
@@ -78,14 +77,6 @@
 #include <assimp/IOSystem.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
-#else
-#include <assimp.hpp>
-#include <aiScene.h>
-#include <aiPostProcess.h>
-#include <DefaultLogger.h>
-#include <IOStream.h>
-#include <IOSystem.h>
-#endif
 
 #include <geometric_shapes/shapes.h>
 #include <geometric_shapes/mesh_operations.h>
@@ -130,7 +121,9 @@ public:
     }
 
     size_t Write( const void* buffer, size_t size, size_t count) {
-        ROS_BREAK(); return 0;
+        // TODO(sloretz)
+        // ROS_BREAK();
+        return 0;
     }
 
     aiReturn Seek( size_t offset, aiOrigin origin)
@@ -148,7 +141,9 @@ public:
             new_pos = res_.data.get() + res_.size - offset; // TODO is this right?
             break;
         default:
-            ROS_BREAK();
+              // TODO(sloretz)
+            // ROS_BREAK();
+            break;
         }
 
         if (new_pos < res_.data.get() || new_pos > res_.data.get() + res_.size)
@@ -497,7 +492,8 @@ public:
     // ... and finally a method to open a custom stream
     Assimp::IOStream* Open(const char* file, const char* mode)
     {
-        ROS_ASSERT(mode == std::string("r") || mode == std::string("rb"));
+        // TODO(sloretz)
+        // ROS_ASSERT(mode == std::string("r") || mode == std::string("rb"));
 
         // Ugly -- two retrievals where there should be one (Exists + Open)
         // resource_retriever needs a way of checking for existence
@@ -702,7 +698,8 @@ public:
             return true;
         }
         catch (ColladaUrdfException ex) {
-            ROS_ERROR("Error converting: %s", ex.what());
+            // TODO(sloretz)
+            // ROS_ERROR("Error converting: %s", ex.what());
             return false;
         }
     }
@@ -765,7 +762,8 @@ protected:
     /// \brief Write kinematic body in a given scene
     void _WriteRobot(int id = 0)
     {
-        ROS_DEBUG_STREAM(str(boost::format("writing robot as instance_articulated_system (%d) %s\n")%id%_robot.getName()));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("writing robot as instance_articulated_system (%d) %s\n")%id%_robot.getName()));
         string asid = _ComputeId(str(boost::format("robot%d")%id));
         string askid = _ComputeId(str(boost::format("%s_kinematics")%asid));
         string asmid = _ComputeId(str(boost::format("%s_motion")%asid));
@@ -883,7 +881,8 @@ protected:
     /// \brief Write kinematic body in a given scene
     virtual void _WriteInstance_kinematics_model(daeElementRef parent, const string& sidscope, int id)
     {
-        ROS_DEBUG_STREAM(str(boost::format("writing instance_kinematics_model %s\n")%_robot.getName()));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("writing instance_kinematics_model %s\n")%_robot.getName()));
         boost::shared_ptr<kinematics_model_output> kmout = WriteKinematics_model(id);
 
         _ikmout.reset(new instance_kinematics_model_output());
@@ -1009,7 +1008,8 @@ protected:
                 fmult = 0;
                 break;
             default:
-                ROS_WARN_STREAM(str(boost::format("unsupported joint type specified %d")%(int)pjoint->type));
+                  // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("unsupported joint type specified %d")%(int)pjoint->type));
                 break;
             }
 
@@ -1261,7 +1261,8 @@ protected:
                 break;
             }
             default:
-                ROS_WARN_STREAM(str(boost::format("unsupported joint type specified %d")%(int)pjoint->type));
+                                          // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("unsupported joint type specified %d")%(int)pjoint->type));
                 break;
             }
 
@@ -1494,15 +1495,18 @@ protected:
     {
         const aiScene* scene = _importer.ReadFile(filename, aiProcess_SortByPType|aiProcess_Triangulate); //|aiProcess_GenNormals|aiProcess_GenUVCoords|aiProcess_FlipUVs);
         if( !scene ) {
-            ROS_WARN("failed to load resource %s",filename.c_str());
+            // TODO(sloretz)
+            // ROS_WARN("failed to load resource %s",filename.c_str());
             return;
         }
         if( !scene->mRootNode ) {
-            ROS_WARN("resource %s has no data",filename.c_str());
+            // TODO(sloretz)
+            // ROS_WARN("resource %s has no data",filename.c_str());
             return;
         }
         if (!scene->HasMeshes()) {
-            ROS_WARN_STREAM(str(boost::format("No meshes found in file %s")%filename));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("No meshes found in file %s")%filename));
             return;
         }
         domMeshRef pdommesh = daeSafeCast<domMesh>(pdomgeom->add(COLLADA_ELEMENT_MESH));

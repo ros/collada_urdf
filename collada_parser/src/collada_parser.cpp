@@ -61,7 +61,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <ros/console.h>
+// #include <ros/console.h>
 #include <collada_parser/collada_parser.h>
 #include <urdf_model/model.h>
 
@@ -110,7 +110,8 @@ public:
             }
 
             if (!visualnode) {
-                ROS_WARN_STREAM(str(boost::format("couldn't find parent node of element id %s, sid %s\n")%pkinematicaxis->getID()%pkinematicaxis->getSid()));
+                // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("couldn't find parent node of element id %s, sid %s\n")%pkinematicaxis->getID()%pkinematicaxis->getSid()));
             }
         }
 
@@ -162,13 +163,15 @@ public:
                         }
                     }
                     if( !bfound ) {
-                        ROS_WARN_STREAM(str(boost::format("could not find binding for axis: %s, %s\n")%kinematics_axis_info->getAxis()%pelt->getAttribute("sid")));
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("could not find binding for axis: %s, %s\n")%kinematics_axis_info->getAxis()%pelt->getAttribute("sid")));
                         return false;
                     }
                     return true;
                 }
             }
-            ROS_WARN_STREAM(str(boost::format("could not find kinematics axis target: %s\n")%kinematics_axis_info->getAxis()));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("could not find kinematics axis target: %s\n")%kinematics_axis_info->getAxis()));
             return false;
         }
     };
@@ -428,7 +431,8 @@ public:
     }
 
     bool InitFromFile(const std::string& filename) {
-        ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s, filename: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE%filename));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s, filename: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE%filename));
         _collada.reset(new DAE);
         _dom = (domCOLLADA*)_collada->open(filename);
         if (!_dom) {
@@ -442,12 +446,14 @@ public:
 
         double dScale = 1.0;
         _processUserData(_dom, dScale);
-        ROS_DEBUG_STREAM(str(boost::format("processed children: %d/%d\n")%_vuserdata.size()%maxchildren));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("processed children: %d/%d\n")%_vuserdata.size()%maxchildren));
         return _Extract();
     }
 
     bool InitFromData(const std::string& pdata) {
-        ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE));
         _collada.reset(new DAE);
         _dom = (domCOLLADA*)_collada->openFromMemory(".",pdata.c_str());
         if (!_dom) {
@@ -460,7 +466,8 @@ public:
 
         double dScale = 1.0;
         _processUserData(_dom, dScale);
-        ROS_DEBUG_STREAM(str(boost::format("processed children: %d/%d\n")%_vuserdata.size()%maxchildren));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("processed children: %d/%d\n")%_vuserdata.size()%maxchildren));
         return _Extract();
     }
 
@@ -517,7 +524,8 @@ protected:
         }
         catch(ParseError &e)
         {
-            ROS_ERROR("Failed to build tree: %s", e.what());
+            // TODO(sloretz)
+            // ROS_ERROR("Failed to build tree: %s", e.what());
         }
 
         // find the root link
@@ -527,7 +535,8 @@ protected:
         }
         catch(ParseError &e)
         {
-            ROS_ERROR("Failed to find root link: %s", e.what());
+            // TODO(sloretz)
+            // ROS_ERROR("Failed to find root link: %s", e.what());
         }
     }
 
@@ -537,7 +546,8 @@ protected:
         if( !ias ) {
             return false;
         }
-        ROS_DEBUG_STREAM(str(boost::format("instance articulated system sid %s\n")%ias->getSid()));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("instance articulated system sid %s\n")%ias->getSid()));
         domArticulated_systemRef articulated_system = daeSafeCast<domArticulated_system> (ias->getUrl().getElement().cast());
         if( !articulated_system ) {
             return false;
@@ -548,7 +558,8 @@ protected:
             pinterface_type = _ExtractInterfaceType(articulated_system->getExtra_array());
         }
         if( !!pinterface_type ) {
-            ROS_DEBUG_STREAM(str(boost::format("robot type: %s")%(*pinterface_type)));
+            // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("robot type: %s")%(*pinterface_type)));
         }
 
         // set the name
@@ -582,7 +593,8 @@ protected:
                         bindings.AddAxisInfo(daeSafeCast<domKinematics>(pparent)->getInstance_kinematics_model_array(), kinematics_axis_info, motion_axis_info);
                     }
                     else {
-                        ROS_WARN_STREAM(str(boost::format("failed to find kinematics axis %s\n")%motion_axis_info->getAxis()));
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("failed to find kinematics axis %s\n")%motion_axis_info->getAxis()));
                     }
                 }
             }
@@ -592,7 +604,8 @@ protected:
         }
         else {
             if( !articulated_system->getKinematics() ) {
-                ROS_WARN_STREAM(str(boost::format("collada <kinematics> tag empty? instance_articulated_system=%s\n")%ias->getID()));
+                // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("collada <kinematics> tag empty? instance_articulated_system=%s\n")%ias->getID()));
                 return true;
             }
 
@@ -618,10 +631,12 @@ protected:
         if( !ikm ) {
             return false;
         }
-        ROS_DEBUG_STREAM(str(boost::format("instance kinematics model sid %s\n")%ikm->getSid()));
+        // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("instance kinematics model sid %s\n")%ikm->getSid()));
         domKinematics_modelRef kmodel = daeSafeCast<domKinematics_model> (ikm->getUrl().getElement().cast());
         if (!kmodel) {
-            ROS_WARN_STREAM(str(boost::format("%s does not reference valid kinematics\n")%ikm->getSid()));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("%s does not reference valid kinematics\n")%ikm->getSid()));
             return false;
         }
         domPhysics_modelRef pmodel;
@@ -630,7 +645,8 @@ protected:
             pinterface_type = _ExtractInterfaceType(kmodel->getExtra_array());
         }
         if( !!pinterface_type ) {
-            ROS_DEBUG_STREAM(str(boost::format("kinbody interface type: %s")%(*pinterface_type)));
+            // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("kinbody interface type: %s")%(*pinterface_type)));
         }
 
         // find matching visual node
@@ -642,7 +658,8 @@ protected:
             }
         }
         if( !pvisualnode ) {
-            ROS_WARN_STREAM(str(boost::format("failed to find visual node for instance kinematics model %s\n")%ikm->getSid()));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("failed to find visual node for instance kinematics model %s\n")%ikm->getSid()));
             return false;
         }
 
@@ -654,7 +671,8 @@ protected:
         }
 
         if (!_ExtractKinematicsModel(kmodel, pvisualnode, pmodel, bindings)) {
-            ROS_WARN_STREAM(str(boost::format("failed to load kinbody from kinematics model %s\n")%kmodel->getID()));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("failed to load kinbody from kinematics model %s\n")%kmodel->getID()));
             return false;
         }
         return true;
@@ -664,9 +682,11 @@ protected:
     bool _ExtractKinematicsModel(domKinematics_modelRef kmodel, domNodeRef pnode, domPhysics_modelRef pmodel, const KinematicsSceneBindings& bindings)
     {
         std::vector<domJointRef> vdomjoints;
-        ROS_DEBUG_STREAM(str(boost::format("kinematics model: %s\n")%_model->name_));
+          // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("kinematics model: %s\n")%_model->name_));
         if( !!pnode ) {
-            ROS_DEBUG_STREAM(str(boost::format("node name: %s\n")%pnode->getId()));
+            // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("node name: %s\n")%pnode->getId()));
         }
 
         //  Process joint of the kinbody
@@ -681,21 +701,24 @@ protected:
         for (size_t ijoint = 0; ijoint < ktec->getInstance_joint_array().getCount(); ++ijoint) {
             domJointRef pelt = daeSafeCast<domJoint> (ktec->getInstance_joint_array()[ijoint]->getUrl().getElement());
             if (!pelt) {
-                ROS_WARN_STREAM("failed to get joint from instance\n");
+                // TODO(sloretz)
+                // ROS_WARN_STREAM("failed to get joint from instance\n");
             }
             else {
                 vdomjoints.push_back(pelt);
             }
         }
 
-        ROS_DEBUG_STREAM(str(boost::format("Number of root links in the kmodel %d\n")%ktec->getLink_array().getCount()));
+          // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("Number of root links in the kmodel %d\n")%ktec->getLink_array().getCount()));
         for (size_t ilink = 0; ilink < ktec->getLink_array().getCount(); ++ilink) {
             domLinkRef pdomlink = ktec->getLink_array()[ilink];
             _RootOrigin  = _poseFromMatrix(_ExtractFullTransform(pdomlink));
-            ROS_DEBUG("RootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
-                      pdomlink->getName(),
-                      _RootOrigin.position.x, _RootOrigin.position.y, _RootOrigin.position.z,
-                      _RootOrigin.rotation.x, _RootOrigin.rotation.y, _RootOrigin.rotation.z, _RootOrigin.rotation.w);
+              // TODO(sloretz)
+            // ROS_DEBUG("RootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
+            //          pdomlink->getName(),
+            //          _RootOrigin.position.x, _RootOrigin.position.y, _RootOrigin.position.z,
+            //          _RootOrigin.rotation.x, _RootOrigin.rotation.y, _RootOrigin.rotation.z, _RootOrigin.rotation.w);
 
             domNodeRef pvisualnode;
             FOREACH(it, bindings.listKinematicsVisualBindings) {
@@ -706,10 +729,11 @@ protected:
             }
             if (!!pvisualnode) {
               _VisualRootOrigin  = _poseFromMatrix(_getNodeParentTransform(pvisualnode));
-              ROS_DEBUG("VisualRootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
-                        pdomlink->getName(),
-                        _VisualRootOrigin.position.x, _VisualRootOrigin.position.y, _VisualRootOrigin.position.z,
-                        _VisualRootOrigin.rotation.x, _VisualRootOrigin.rotation.y, _VisualRootOrigin.rotation.z, _VisualRootOrigin.rotation.w);
+                // TODO(sloretz)
+              // ROS_DEBUG("VisualRootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
+              //          pdomlink->getName(),
+              //          _VisualRootOrigin.position.x, _VisualRootOrigin.position.y, _VisualRootOrigin.position.z,
+              //          _VisualRootOrigin.rotation.x, _VisualRootOrigin.rotation.y, _VisualRootOrigin.rotation.z, _VisualRootOrigin.rotation.w);
             }
             _ExtractLink(pdomlink, ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, bindings);
         }
@@ -718,7 +742,8 @@ protected:
         for (size_t iform = 0; iform < ktec->getFormula_array().getCount(); ++iform) {
             domFormulaRef pf = ktec->getFormula_array()[iform];
             if (!pf->getTarget()) {
-                ROS_WARN_STREAM("formula target not valid\n");
+                // TODO(sloretz)
+                // ROS_WARN_STREAM("formula target not valid\n");
                 continue;
             }
 
@@ -738,7 +763,8 @@ protected:
                         peltmath = pelt;
                     }
                     else {
-                        ROS_WARN_STREAM(str(boost::format("unsupported formula element: %s\n")%pelt->getElementName()));
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("unsupported formula element: %s\n")%pelt->getElementName()));
                     }
                 }
                 if (!!peltmath) {
@@ -800,7 +826,8 @@ protected:
                         pjoint->mimic->joint_name = pbasejoint->name;
                         pjoint->mimic->multiplier = a;
                         pjoint->mimic->offset = b;
-                        ROS_DEBUG_STREAM(str(boost::format("assigning joint %s to mimic %s %f %f\n")%pjoint->name%pbasejoint->name%a%b));
+                          // TODO(sloretz)
+                        // ROS_DEBUG_STREAM(str(boost::format("assigning joint %s to mimic %s %f %f\n")%pjoint->name%pbasejoint->name%a%b));
                     }
                 }
             }
@@ -814,7 +841,8 @@ protected:
         //  Set link name with the name of the COLLADA's Link
         std::string linkname = _ExtractLinkName(pdomlink);
         if( linkname.size() == 0 ) {
-            ROS_WARN_STREAM("<link> has no name or id, falling back to <node>!\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("<link> has no name or id, falling back to <node>!\n");
             if( !!pdomnode ) {
                 if (!!pdomnode->getName()) {
                     linkname = pdomnode->getName();
@@ -844,7 +872,8 @@ protected:
 
         _getUserData(pdomlink)->p = plink;
         if( !!pdomnode ) {
-            ROS_DEBUG_STREAM(str(boost::format("Node Id %s and Name %s\n")%pdomnode->getId()%pdomnode->getName()));
+            // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("Node Id %s and Name %s\n")%pdomnode->getId()%pdomnode->getName()));
         }
 
         // physics
@@ -889,16 +918,19 @@ protected:
 
         std::list<GEOMPROPERTIES> listGeomProperties;
         if (!pdomlink) {
-            ROS_WARN_STREAM("Extract object NOT kinematics !!!\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("Extract object NOT kinematics !!!\n");
             _ExtractGeometry(pdomnode,listGeomProperties,listAxisBindings,Pose());
         }
         else {
-            ROS_DEBUG_STREAM(str(boost::format("Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
+            // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
             Pose tlink = _poseFromMatrix(_ExtractFullTransform(pdomlink));
-            ROS_DEBUG("tlink: %s: %lf %lf %lf %lf %lf %lf %lf",
-                      linkname.c_str(),
-                      tlink.position.x,  tlink.position.y, tlink.position.z,
-                      tlink.rotation.x, tlink.rotation.y, tlink.rotation.z, tlink.rotation.w);
+              // TODO(sloretz)
+            // ROS_DEBUG("tlink: %s: %lf %lf %lf %lf %lf %lf %lf",
+            //          linkname.c_str(),
+            //          tlink.position.x,  tlink.position.y, tlink.position.z,
+            //          tlink.rotation.x, tlink.rotation.y, tlink.rotation.z, tlink.rotation.w);
             plink->visual->origin = _poseMult(tParentLink, tlink); // use the kinematics coordinate system for each link
             //            ROS_INFO("link %s rot: %f %f %f %f",linkname.c_str(),plink->visual->origin.rotation.w, plink->visual->origin.rotation.x,plink->visual->origin.rotation.y,plink->visual->origin.rotation.z);
             //            ROS_INFO("link %s trans: %f %f %f",linkname.c_str(),plink->visual->origin.position.x,plink->visual->origin.position.y,plink->visual->origin.position.z);
@@ -907,7 +939,8 @@ protected:
             _ExtractGeometry(pdomnode, listGeomProperties, listAxisBindings,
                              _poseMult(_poseMult(tParentWorldLink,tlink), plink->visual->origin));
 
-            ROS_DEBUG_STREAM(str(boost::format("After ExtractGeometry Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
+              // TODO(sloretz)
+            // ROS_DEBUG_STREAM(str(boost::format("After ExtractGeometry Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
 
             //  Process all atached links
             for (size_t iatt = 0; iatt < pdomlink->getAttachment_full_array().getCount(); ++iatt) {
@@ -928,13 +961,15 @@ protected:
                 }
 
                 if (!pdomjoint || pdomjoint->typeID() != domJoint::ID()) {
-                    ROS_WARN_STREAM(str(boost::format("could not find attached joint %s!\n")%pattfull->getJoint()));
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("could not find attached joint %s!\n")%pattfull->getJoint()));
                     return urdf::LinkSharedPtr();
                 }
 
                 // get direct child link
                 if (!pattfull->getLink()) {
-                    ROS_WARN_STREAM(str(boost::format("joint %s needs to be attached to a valid link\n")%pdomjoint->getID()));
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("joint %s needs to be attached to a valid link\n")%pdomjoint->getID()));
                     continue;
                 }
 
@@ -956,7 +991,8 @@ protected:
                     }
                 }
                 if (!pchildnode) {
-                    ROS_DEBUG_STREAM(str(boost::format("joint %s has no visual binding\n")%pdomjoint->getID()));
+                    // TODO(sloretz)
+                    // ROS_DEBUG_STREAM(str(boost::format("joint %s has no visual binding\n")%pdomjoint->getID()));
                 }
 
                 // create the joints before creating the child links
@@ -988,7 +1024,8 @@ protected:
                     }
 
                     if( !joint_active ) {
-                        ROS_INFO_STREAM(str(boost::format("joint %s is passive, but adding to hierarchy\n")%pjoint->name));
+                        // TODO(sloretz)
+                        // ROS_INFO_STREAM(str(boost::format("joint %s is passive, but adding to hierarchy\n")%pjoint->name));
                     }
 
                     domAxis_constraintRef pdomaxis = vdomaxes[ic];
@@ -999,7 +1036,8 @@ protected:
                         pjoint->type = Joint::PRISMATIC;
                     }
                     else {
-                        ROS_WARN_STREAM(str(boost::format("unsupported joint type: %s\n")%pdomaxis->getElementName()));
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("unsupported joint type: %s\n")%pdomaxis->getElementName()));
                     }
 
                     _getUserData(pdomjoint)->p = pjoint;
@@ -1015,7 +1053,8 @@ protected:
                 urdf::LinkSharedPtr pchildlink = _ExtractLink(pattfull->getLink(), pchildnode, _poseMult(_poseMult(tParentWorldLink,tlink), tatt), tatt, vdomjoints, bindings);
 
                 if (!pchildlink) {
-                    ROS_WARN_STREAM(str(boost::format("Link has no child: %s\n")%plink->name));
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("Link has no child: %s\n")%plink->name));
                     continue;
                 }
 
@@ -1036,7 +1075,8 @@ protected:
                     if (!pchildlink) {
                         // create dummy child link
                         // multiple axes can be easily done with "empty links"
-                        ROS_WARN_STREAM(str(boost::format("creating dummy link %s, num joints %d\n")%plink->name%numjoints));
+                        //  // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("creating dummy link %s, num joints %d\n")%plink->name%numjoints));
 
                         std::stringstream ss;
                         ss << plink->name;
@@ -1046,7 +1086,8 @@ protected:
                         _model->links_.insert(std::make_pair(pchildlink->name,pchildlink));
                     }
 
-                    ROS_DEBUG_STREAM(str(boost::format("Joint %s assigned %d \n")%vjoints[ic]->name%ic));
+                      // TODO(sloretz)
+                    // ROS_DEBUG_STREAM(str(boost::format("Joint %s assigned %d \n")%vjoints[ic]->name%ic));
                     urdf::JointSharedPtr pjoint = vjoints[ic];
                     pjoint->child_link_name = pchildlink->name;
 
@@ -1054,8 +1095,9 @@ protected:
                                            apose.position.x, apose.position.y, apose.position.z, \
                                            apose.rotation.x, apose.rotation.y, apose.rotation.z, apose.rotation.w);
                     {
-                      PRINT_POSE("tatt", tatt);
-                      PRINT_POSE("trans_joint_to_child", tatt);
+                      // TODO(sloretz)
+                      // PRINT_POSE("tatt", tatt);
+                      // PRINT_POSE("trans_joint_to_child", tatt);
                       Pose trans_joint_to_child = _poseFromMatrix(_ExtractFullTransform(pattfull->getLink()));
 
                       pjoint->parent_to_joint_origin_transform = _poseMult(tatt, trans_joint_to_child);
@@ -1071,26 +1113,30 @@ protected:
                       pjoint->axis.y = ax.y;
                       pjoint->axis.z = ax.z;
 
-                      ROS_DEBUG("joint %s axis: %f %f %f -> %f %f %f\n", pjoint->name.c_str(),
-                                pdomaxis->getAxis()->getValue()[0],
-                                pdomaxis->getAxis()->getValue()[1],
-                                pdomaxis->getAxis()->getValue()[2],
-                                pjoint->axis.x, pjoint->axis.y, pjoint->axis.z);
+                        // TODO(sloretz)
+                      // ROS_DEBUG("joint %s axis: %f %f %f -> %f %f %f\n", pjoint->name.c_str(),
+                      //           pdomaxis->getAxis()->getValue()[0],
+                      //           pdomaxis->getAxis()->getValue()[1],
+                      //           pdomaxis->getAxis()->getValue()[2],
+                      //           pjoint->axis.x, pjoint->axis.y, pjoint->axis.z);
                     }
 
                     if (!motion_axis_info) {
-                        ROS_WARN_STREAM(str(boost::format("No motion axis info for joint %s\n")%pjoint->name));
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM(str(boost::format("No motion axis info for joint %s\n")%pjoint->name));
                     }
 
                     //  Sets the Speed and the Acceleration of the joint
                     if (!!motion_axis_info) {
                         if (!!motion_axis_info->getSpeed()) {
                             pjoint->limits->velocity = resolveFloat(motion_axis_info->getSpeed(),motion_axis_info);
-                            ROS_DEBUG("... Joint Speed: %f...\n",pjoint->limits->velocity);
+                              // TODO(sloretz)
+                            // ROS_DEBUG("... Joint Speed: %f...\n",pjoint->limits->velocity);
                         }
                         if (!!motion_axis_info->getAcceleration()) {
                             pjoint->limits->effort = resolveFloat(motion_axis_info->getAcceleration(),motion_axis_info);
-                            ROS_DEBUG("... Joint effort: %f...\n",pjoint->limits->effort);
+                              // TODO(sloretz)
+                            // ROS_DEBUG("... Joint effort: %f...\n",pjoint->limits->effort);
                         }
                     }
 
@@ -1104,7 +1150,8 @@ protected:
 
                         if (joint_locked) { // If joint is locked set limits to the static value.
                             if( pjoint->type == Joint::REVOLUTE || pjoint->type ==Joint::PRISMATIC) {
-                                ROS_WARN_STREAM("lock joint!!\n");
+                                // TODO(sloretz)
+                                // ROS_WARN_STREAM("lock joint!!\n");
                                 pjoint->limits->lower = 0;
                                 pjoint->limits->upper = 0;
                             }
@@ -1126,7 +1173,8 @@ protected:
                     if (!kinematics_axis_info || (!joint_locked && !kinematics_limits)) {
                         //  If there are NO LIMITS
                         if( !pdomaxis->getLimits() ) {
-                            ROS_DEBUG_STREAM(str(boost::format("There are NO LIMITS in joint %s:%d ...\n")%pjoint->name%kinematics_limits));
+                            // TODO(sloretz)
+                            // ROS_DEBUG_STREAM(str(boost::format("There are NO LIMITS in joint %s:%d ...\n")%pjoint->name%kinematics_limits));
                             if( pjoint->type == Joint::REVOLUTE ) {
                                 pjoint->type = Joint::CONTINUOUS; // continuous means revolute?
                                 pjoint->limits->lower = -M_PI;
@@ -1138,7 +1186,8 @@ protected:
                             }
                         }
                         else {
-                            ROS_DEBUG_STREAM(str(boost::format("There are LIMITS in joint %s ...\n")%pjoint->name));
+                            // TODO(sloretz)
+                            // ROS_DEBUG_STREAM(str(boost::format("There are LIMITS in joint %s ...\n")%pjoint->name));
                             double fscale = (pjoint->type == Joint::REVOLUTE) ? (M_PI/180.0f) : _GetUnitScale(pdomaxis);
                             pjoint->limits->lower = (double)pdomaxis->getLimits()->getMin()->getValue()*fscale;
                             pjoint->limits->upper = (double)pdomaxis->getLimits()->getMax()->getValue()*fscale;
@@ -1158,10 +1207,12 @@ protected:
         }
 
         if( pdomlink->getAttachment_start_array().getCount() > 0 ) {
-            ROS_WARN("urdf collada reader does not support attachment_start\n");
+            // TODO(sloretz)
+            // ROS_WARN("urdf collada reader does not support attachment_start\n");
         }
         if( pdomlink->getAttachment_end_array().getCount() > 0 ) {
-            ROS_WARN("urdf collada reader does not support attachment_end\n");
+            // TODO(sloretz)
+            // ROS_WARN("urdf collada reader does not support attachment_end\n");
         }
 
         plink->visual->geometry = _CreateGeometry(plink->name, listGeomProperties);
@@ -1363,14 +1414,16 @@ protected:
             }
         }
         if( fd == -1 ) {
-            ROS_ERROR("failed to open geometry dae file %s",geometry->filename.c_str());
+            // TODO(sloretz)
+            // ROS_ERROR("failed to open geometry dae file %s",geometry->filename.c_str());
             return geometry;
         }
 #endif
         //ROS_INFO("temp file: %s",geometry->filename.c_str());
         std::string daedatastr = daedata.str();
         if( (size_t)write(fd,daedatastr.c_str(),daedatastr.size()) != daedatastr.size() ) {
-            ROS_ERROR("failed to write to geometry dae file %s",geometry->filename.c_str());
+            // TODO(sloretz)
+            // ROS_ERROR("failed to write to geometry dae file %s",geometry->filename.c_str());
         }
         close(fd);
         _listTempFilenames.push_back(boost::shared_ptr<UnlinkFilename>(new UnlinkFilename(geometry->filename)));
@@ -1387,7 +1440,8 @@ protected:
             return;
         }
 
-        ROS_DEBUG_STREAM(str(boost::format("ExtractGeometry(node,link) of %s\n")%pdomnode->getName()));
+          // TODO(sloretz)
+        // ROS_DEBUG_STREAM(str(boost::format("ExtractGeometry(node,link) of %s\n")%pdomnode->getName()));
 
         // For all child nodes of pdomnode
         for (size_t i = 0; i < pdomnode->getNode_array().getCount(); i++) {
@@ -1450,10 +1504,11 @@ protected:
         Vector3 vscale(1,1,1);
         _decompose(tmnodegeom, tnodegeom, vscale);
 
-        ROS_DEBUG_STREAM("tnodegeom: " << pdomnode->getName()
-                         << tnodegeom.position.x << " " << tnodegeom.position.y << " " << tnodegeom.position.z << " / "
-                         << tnodegeom.rotation.x << " " << tnodegeom.rotation.y << " " << tnodegeom.rotation.z << " "
-                         << tnodegeom.rotation.w);
+          // TODO(sloretz)
+        // ROS_DEBUG_STREAM("tnodegeom: " << pdomnode->getName()
+        //                 << tnodegeom.position.x << " " << tnodegeom.position.y << " " << tnodegeom.position.z << " / "
+        //                 << tnodegeom.rotation.x << " " << tnodegeom.rotation.y << " " << tnodegeom.rotation.z << " "
+        //                 << tnodegeom.rotation.w);
 
         //        std::stringstream ss; ss << "geom: ";
         //        for(int i = 0; i < 4; ++i) {
@@ -1485,7 +1540,9 @@ protected:
                 itgeom->_t = Pose(); // reset back to identity
                 break;
             default:
-                ROS_WARN_STREAM(str(boost::format("unknown geometry type: %d\n")%itgeom->type));
+                break;
+                  // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("unknown geometry type: %d\n")%itgeom->type));
             }
         }
     }
@@ -1589,13 +1646,15 @@ protected:
                     }
                 }
                 else {
-                    ROS_WARN_STREAM("float array not defined!\n");
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM("float array not defined!\n");
                 }
                 break;
             }
         }
         if( geom.indices.size() != 3*triRef->getCount() ) {
-            ROS_WARN_STREAM("triangles declares wrong count!\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("triangles declares wrong count!\n");
         }
         geom.InitCollisionMesh();
         return true;
@@ -1639,7 +1698,8 @@ protected:
         triangleIndexStride++;
         size_t primitivecount = triRef->getCount();
         if( primitivecount > triRef->getP_array().getCount() ) {
-            ROS_WARN_STREAM("trifans has incorrect count\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("trifans has incorrect count\n");
             primitivecount = triRef->getP_array().getCount();
         }
         for(size_t ip = 0; ip < primitivecount; ++ip) {
@@ -1681,7 +1741,8 @@ protected:
                         }
                     }
                     else {
-                        ROS_WARN_STREAM("float array not defined!\n");
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM("float array not defined!\n");
                     }
                     break;
                 }
@@ -1729,7 +1790,8 @@ protected:
         triangleIndexStride++;
         size_t primitivecount = triRef->getCount();
         if( primitivecount > triRef->getP_array().getCount() ) {
-            ROS_WARN_STREAM("tristrips has incorrect count\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("tristrips has incorrect count\n");
             primitivecount = triRef->getP_array().getCount();
         }
         for(size_t ip = 0; ip < primitivecount; ++ip) {
@@ -1775,7 +1837,8 @@ protected:
                         }
                     }
                     else {
-                        ROS_WARN_STREAM("float array not defined!\n");
+                        // TODO(sloretz)
+                        // ROS_WARN_STREAM("float array not defined!\n");
                     }
                     break;
                 }
@@ -1857,7 +1920,8 @@ protected:
                     }
                 }
                 else {
-                    ROS_WARN_STREAM("float array not defined!\n");
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM("float array not defined!\n");
                 }
                 break;
             }
@@ -1890,7 +1954,8 @@ protected:
                 _ExtractGeometry(meshRef->getPolylist_array()[tg], meshRef->getVertices(), mapmaterials, listGeomProperties);
             }
             if( meshRef->getPolygons_array().getCount()> 0 ) {
-                ROS_WARN_STREAM("openrave does not support collada polygons\n");
+                // TODO(sloretz)
+                // ROS_WARN_STREAM("openrave does not support collada polygons\n");
             }
 
             //            if( alltrimesh.vertices.size() == 0 ) {
@@ -1930,11 +1995,14 @@ protected:
                 daeElementRef otherElemRef = convexRef->getConvex_hull_of().getElement();
                 if ( !!otherElemRef ) {
                     domGeometryRef linkedGeom = *(domGeometryRef*)&otherElemRef;
-                    ROS_WARN_STREAM( "otherLinked\n");
+                      // TODO(sloretz)
+                    // ROS_WARN_STREAM( "otherLinked\n");
                 }
                 else {
-                    ROS_WARN("convexMesh polyCount = %d\n",(int)convexRef->getPolygons_array().getCount());
-                    ROS_WARN("convexMesh triCount = %d\n",(int)convexRef->getTriangles_array().getCount());
+                    // TODO(sloretz)
+                    // ROS_WARN("convexMesh polyCount = %d\n",(int)convexRef->getPolygons_array().getCount());
+                    //  // TODO(sloretz)
+                    // ROS_WARN("convexMesh triCount = %d\n",(int)convexRef->getTriangles_array().getCount());
                 }
             }
 
@@ -2050,8 +2118,9 @@ protected:
                     if ( !! nom_torque ) {
                         if( !! pjoint->limits ) {
                             pjoint->limits->effort = boost::lexical_cast<double>(nom_torque->getCharData());
-                            ROS_DEBUG("effort limit at joint (%s) is over written by %f",
-                                      pjoint->name.c_str(), pjoint->limits->effort);
+                              // TODO(sloretz)
+                            // ROS_DEBUG("effort limit at joint (%s) is over written by %f",
+                            //           pjoint->name.c_str(), pjoint->limits->effort);
                         }
                     }
                 }
@@ -2062,13 +2131,15 @@ protected:
     /// \brief extract the robot manipulators
     void _ExtractRobotManipulators(const domArticulated_systemRef as)
     {
-        ROS_DEBUG("collada manipulators not supported yet");
+        // TODO(sloretz)
+        // ROS_DEBUG("collada manipulators not supported yet");
     }
 
     /// \brief Extract Sensors attached to a Robot
     void _ExtractRobotAttachedSensors(const domArticulated_systemRef as)
     {
-        ROS_DEBUG("collada sensors not supported yet");
+        // TODO(sloretz)
+        // ROS_DEBUG("collada sensors not supported yet");
     }
 
     inline daeElementRef _getElementFromUrl(const daeURI &uri)
@@ -2154,11 +2225,13 @@ protected:
                     if( !!newparam->getSIDREF() ) { // can only bind with SIDREF
                         return daeSidRef(newparam->getSIDREF()->getValue(),pbindelt).resolve().elt;
                     }
-                    ROS_WARN_STREAM(str(boost::format("newparam sid=%s does not have SIDREF\n")%newparam->getSid()));
+                      // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("newparam sid=%s does not have SIDREF\n")%newparam->getSid()));
                 }
             }
         }
-        ROS_WARN_STREAM(str(boost::format("failed to get binding '%s' for element: %s\n")%ref%parent->getElementName()));
+          // TODO(sloretz)
+        // ROS_WARN_STREAM(str(boost::format("failed to get binding '%s' for element: %s\n")%ref%parent->getElementName()));
         return NULL;
     }
 
@@ -2189,7 +2262,8 @@ protected:
             return paddr->getBool()->getValue();
         }
         if( !paddr->getParam() ) {
-            ROS_WARN_STREAM("param not specified, setting to 0\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("param not specified, setting to 0\n");
             return false;
         }
         for(size_t iparam = 0; iparam < parent->getNewparam_array().getCount(); ++iparam) {
@@ -2201,14 +2275,16 @@ protected:
                 else if( !!pnewparam->getSIDREF() ) {
                     domKinematics_newparam::domBoolRef ptarget = daeSafeCast<domKinematics_newparam::domBool>(daeSidRef(pnewparam->getSIDREF()->getValue(), pnewparam).resolve().elt);
                     if( !ptarget ) {
-                        ROS_WARN("failed to resolve %s from %s\n", pnewparam->getSIDREF()->getValue(), paddr->getID());
+                        // TODO(sloretz)
+                        // ROS_WARN("failed to resolve %s from %s\n", pnewparam->getSIDREF()->getValue(), paddr->getID());
                         continue;
                     }
                     return ptarget->getValue();
                 }
             }
         }
-        ROS_WARN_STREAM(str(boost::format("failed to resolve %s\n")%paddr->getParam()->getValue()));
+          // TODO(sloretz)
+        // ROS_WARN_STREAM(str(boost::format("failed to resolve %s\n")%paddr->getParam()->getValue()));
         return false;
     }
     template <typename U> static domFloat resolveFloat(domCommon_float_or_paramRef paddr, const U& parent) {
@@ -2216,7 +2292,8 @@ protected:
             return paddr->getFloat()->getValue();
         }
         if( !paddr->getParam() ) {
-            ROS_WARN_STREAM("param not specified, setting to 0\n");
+            // TODO(sloretz)
+            // ROS_WARN_STREAM("param not specified, setting to 0\n");
             return 0;
         }
         for(size_t iparam = 0; iparam < parent->getNewparam_array().getCount(); ++iparam) {
@@ -2228,14 +2305,16 @@ protected:
                 else if( !!pnewparam->getSIDREF() ) {
                     domKinematics_newparam::domFloatRef ptarget = daeSafeCast<domKinematics_newparam::domFloat>(daeSidRef(pnewparam->getSIDREF()->getValue(), pnewparam).resolve().elt);
                     if( !ptarget ) {
-                        ROS_WARN("failed to resolve %s from %s\n", pnewparam->getSIDREF()->getValue(), paddr->getID());
+                        // TODO(sloretz)
+                        // ROS_WARN("failed to resolve %s from %s\n", pnewparam->getSIDREF()->getValue(), paddr->getID());
                         continue;
                     }
                     return ptarget->getValue();
                 }
             }
         }
-        ROS_WARN_STREAM(str(boost::format("failed to resolve %s\n")%paddr->getParam()->getValue()));
+          // TODO(sloretz)
+        // ROS_WARN_STREAM(str(boost::format("failed to resolve %s\n")%paddr->getParam()->getValue()));
         return 0;
     }
 
@@ -2250,12 +2329,14 @@ protected:
         daeElement* pparam = pcommon->getChild("param");
         if( !!pparam ) {
             if( pparam->hasAttribute("ref") ) {
-                ROS_WARN_STREAM("cannot process param ref\n");
+                // TODO(sloretz)
+                // ROS_WARN_STREAM("cannot process param ref\n");
             }
             else {
                 daeElement* pelt = daeSidRef(pparam->getCharData(),parent).resolve().elt;
                 if( !!pelt ) {
-                    ROS_WARN_STREAM(str(boost::format("found param ref: %s from %s\n")%pelt->getCharData()%pparam->getCharData()));
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("found param ref: %s from %s\n")%pelt->getCharData()%pparam->getCharData()));
                 }
             }
         }
@@ -2309,13 +2390,15 @@ protected:
 
         domLookatRef pcamera = daeSafeCast<domLookat>(pelt);
         if( pelt->typeID() == domLookat::ID() ) {
-            ROS_ERROR_STREAM("look at transform not implemented\n");
+            // TODO(sloretz)
+            // ROS_ERROR_STREAM("look at transform not implemented\n");
             return m;
         }
 
         domSkewRef pskew = daeSafeCast<domSkew>(pelt);
         if( !!pskew ) {
-            ROS_ERROR_STREAM("skew transform not implemented\n");
+            // TODO(sloretz)
+            // ROS_ERROR_STREAM("skew transform not implemented\n");
         }
 
         return m;
@@ -2359,12 +2442,14 @@ protected:
 
     virtual void handleError( daeString msg )
     {
-        ROS_ERROR("COLLADA error: %s\n", msg);
+        // TODO(sloretz)
+        // ROS_ERROR("COLLADA error: %s\n", msg);
     }
 
     virtual void handleWarning( daeString msg )
     {
-        ROS_WARN("COLLADA warning: %s\n", msg);
+        // TODO(sloretz)
+        // ROS_WARN("COLLADA warning: %s\n", msg);
     }
 
     inline static double _GetUnitScale(daeElement* pelt)
@@ -2437,7 +2522,8 @@ protected:
         }
 
         if (!pdomjoint || pdomjoint->typeID() != domJoint::ID() || !pdomjoint->getName()) {
-            ROS_WARN_STREAM(str(boost::format("could not find collada joint %s!\n")%targetref));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("could not find collada joint %s!\n")%targetref));
             return urdf::JointSharedPtr();
         }
 
@@ -2449,7 +2535,8 @@ protected:
             pjoint = _model->joints_.find(name)->second;
         }
         if(!pjoint) {
-            ROS_WARN_STREAM(str(boost::format("could not find openrave joint %s!\n")%pdomjoint->getName()));
+            // TODO(sloretz)
+            // ROS_WARN_STREAM(str(boost::format("could not find openrave joint %s!\n")%pdomjoint->getName()));
         }
         return pjoint;
     }
@@ -2467,14 +2554,16 @@ protected:
             domArticulated_systemRef articulated_system; // if filled, contains robot-specific information, so create a robot
             domBind_kinematics_modelRef kbindmodel = kiscene->getBind_kinematics_model_array()[imodel];
             if (!kbindmodel->getNode()) {
-                ROS_WARN_STREAM("do not support kinematics models without references to nodes\n");
+                // TODO(sloretz)
+                // ROS_WARN_STREAM("do not support kinematics models without references to nodes\n");
                 continue;
             }
 
             // visual information
             domNodeRef node = daeSafeCast<domNode>(daeSidRef(kbindmodel->getNode(), viscene->getUrl().getElement()).resolve().elt);
             if (!node) {
-                ROS_WARN_STREAM(str(boost::format("bind_kinematics_model does not reference valid node %s\n")%kbindmodel->getNode()));
+                // TODO(sloretz)
+                // ROS_WARN_STREAM(str(boost::format("bind_kinematics_model does not reference valid node %s\n")%kbindmodel->getNode()));
                 continue;
             }
 
@@ -2483,10 +2572,12 @@ protected:
             domInstance_kinematics_modelRef kimodel = daeSafeCast<domInstance_kinematics_model>(pelt);
             if (!kimodel) {
                 if( !pelt ) {
-                    ROS_WARN_STREAM("bind_kinematics_model does not reference element\n");
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM("bind_kinematics_model does not reference element\n");
                 }
                 else {
-                    ROS_WARN_STREAM(str(boost::format("bind_kinematics_model cannot find reference to %s:\n")%pelt->getElementName()));
+                    // TODO(sloretz)
+                    // ROS_WARN_STREAM(str(boost::format("bind_kinematics_model cannot find reference to %s:\n")%pelt->getElementName()));
                 }
                 continue;
             }
@@ -2497,7 +2588,8 @@ protected:
             domBind_joint_axisRef bindjoint = kiscene->getBind_joint_axis_array()[ijoint];
             daeElementRef pjtarget = daeSidRef(bindjoint->getTarget(), viscene->getUrl().getElement()).resolve().elt;
             if (!pjtarget) {
-                ROS_ERROR_STREAM(str(boost::format("Target Node %s NOT found!!!\n")%bindjoint->getTarget()));
+                // TODO(sloretz)
+                // ROS_ERROR_STREAM(str(boost::format("Target Node %s NOT found!!!\n")%bindjoint->getTarget()));
                 continue;
             }
             daeElement* pelt = searchBinding(bindjoint->getAxis(),kscene);

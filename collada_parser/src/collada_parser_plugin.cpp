@@ -34,13 +34,31 @@
 
 /* Author: Ioan Sucan */
 
-#include "collada_parser/collada_parser_plugin.h"
 #include "collada_parser/collada_parser.h"
-#include <class_loader/class_loader.hpp>
+#include <urdf_parser_plugin/parser.h>
 
-urdf::ModelInterfaceSharedPtr urdf::ColladaURDFParser::parse(const std::string &xml_string)
+namespace collada_parser
+{
+class ColladaURDFParser : public urdf::URDFParser
+{
+public:
+
+  urdf::ModelInterfaceSharedPtr parse(const std::string& xml_string) override;
+
+  size_t might_handle(const std::string & data) override;
+};
+
+urdf::ModelInterfaceSharedPtr ColladaURDFParser::parse(const std::string &xml_string)
 {
   return urdf::parseCollada(xml_string);
 }
 
-CLASS_LOADER_REGISTER_CLASS(urdf::ColladaURDFParser, urdf::URDFParser)
+size_t ColladaURDFParser::might_handle(const std::string &data)
+{
+  // probably a collada file if COLLADA is near start of document
+  return data.find("<COLLADA");
+}
+}
+
+#include <pluginlib/class_list_macros.hpp>  // NOLINT
+PLUGINLIB_EXPORT_CLASS(collada_parser::ColladaURDFParser, urdf::URDFParser)

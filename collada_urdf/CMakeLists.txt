@@ -13,15 +13,23 @@ endif()
 
 include_directories(include)
 
+message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
+
 find_package(assimp QUIET)
-if ( NOT ASSIMP_FOUND )
+
+message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
+
+if ( NOT assimp_FOUND )
   find_package(Assimp QUIET)
   if ( NOT ASSIMP_FOUND )
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(ASSIMP assimp)
   endif()
 endif()
-if( ASSIMP_FOUND )
+
+message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
+
+if( assimp_FOUND )
   if( NOT ${ASSIMP_VERSION} VERSION_LESS "2.0.1150" )
     add_definitions(-DASSIMP_UNIFIED_HEADER_NAMES)
   endif()

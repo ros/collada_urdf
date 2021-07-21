@@ -14,14 +14,16 @@ endif()
 include_directories(include)
 
 find_package(assimp QUIET)
-if ( NOT ASSIMP_FOUND )
+
+if ( NOT assimp_FOUND )
   find_package(Assimp QUIET)
   if ( NOT ASSIMP_FOUND )
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(ASSIMP assimp)
   endif()
 endif()
-if( ASSIMP_FOUND )
+
+if( assimp_FOUND )
   if( NOT ${ASSIMP_VERSION} VERSION_LESS "2.0.1150" )
     add_definitions(-DASSIMP_UNIFIED_HEADER_NAMES)
   endif()

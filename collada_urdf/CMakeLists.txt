@@ -13,11 +13,7 @@ endif()
 
 include_directories(include)
 
-message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
-
 find_package(assimp QUIET)
-
-message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
 
 if ( NOT assimp_FOUND )
   find_package(Assimp QUIET)
@@ -26,8 +22,6 @@ if ( NOT assimp_FOUND )
     pkg_check_modules(ASSIMP assimp)
   endif()
 endif()
-
-message(ERROR "Assimp: ${ASSIMP_INCLUDE_DIRS}")
 
 if( assimp_FOUND )
   if( NOT ${ASSIMP_VERSION} VERSION_LESS "2.0.1150" )

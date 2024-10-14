@@ -6,10 +6,6 @@ find_package(catkin REQUIRED COMPONENTS angles cmake_modules collada_parser geom
 find_package(urdfdom_headers REQUIRED)
 
 include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag(-std=c++11 HAS_STD_CPP11_FLAG)
-if(HAS_STD_CPP11_FLAG)
-  add_compile_options(-std=c++11)
-endif()
 
 include_directories(include)
 

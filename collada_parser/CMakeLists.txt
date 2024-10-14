@@ -6,8 +6,6 @@ find_package(Boost REQUIRED system)
 find_package(catkin REQUIRED COMPONENTS class_loader rosconsole urdf urdf_parser_plugin)
 find_package(urdfdom_headers REQUIRED)
 
-add_compile_options(-std=c++11)
-
 include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${urdfdom_headers_INCLUDE_DIRS})
 
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/)

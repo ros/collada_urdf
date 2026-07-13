@@ -57,7 +57,7 @@
 #pragma GCC diagnostic pop
 #endif
 
-#include <resource_retriever/retriever.h>
+#include <resource_retriever/retriever.hpp>
 #include <urdf/model.h>
 #include <urdf_model/pose.h>
 #include <angles/angles.h>

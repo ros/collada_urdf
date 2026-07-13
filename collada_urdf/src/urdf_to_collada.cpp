@@ -35,6 +35,7 @@
 /* Author: Tim Field */
 
 #include "collada_urdf/collada_urdf.h"
+#include <iostream>
 
 int main(int argc, char** argv)
 {

@@ -151,6 +151,8 @@ target_link_libraries(collada_to_urdf
   ${ASSIMP_LIBRARIES}
   collada_urdf
   Eigen3::Eigen
+  Boost::program_options
+  Boost::filesystem
 )
 message(STATUS "Using assimp include dirs: ${ASSIMP_INCLUDE_DIRS}")
 target_include_directories(collada_to_urdf PRIVATE
@@ -181,7 +183,7 @@ install(
   TARGETS collada_urdf urdf_to_collada collada_to_urdf
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
 install(DIRECTORY include/
